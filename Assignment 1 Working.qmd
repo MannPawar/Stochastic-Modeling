@@ -1,0 +1,128 @@
+---
+title: "Assignment 1 Working"
+format: html
+---
+
+Q2. 
+Required = 10 tons of sugar in 6 months
+Possible decisions are to:
+
+1) purchase a futures contract for 10 tons of sugar now.
+
+2) purchase a futures contract for 5 tons of sugar now and purchase 5 tons of sugar six months at market price.
+
+3) purchase all 10 tons of sugar needed in six months.
+
+The price of sugar bought now for delivery in six months is 0.0851 per pound. The transaction cost for 5-ton and 10-ton future contracts are 65 and 110, respectively. Finally, the company has assessed the probability distribution for the possible sugar prices six months from now in dollars per pound. The table contains the possible prices and the corresponding probabilities.
+
+Price	Probability
+$0.078	0.05
+$0.083	0.25
+$0.087	0.35
+$0.091	0.20
+$0.096	0.15
+
+```{r}
+#For Sugar High Problem
+EMV <- 0.078*0.05 + 0.083*0.25 + 0.087*0.35 + 0.091*0.20 + 0.096*0.15
+EMV #Expected Monetary Value of market price in 6 months
+
+D1 <- 0.0851 * 10 * 2000 + 110
+D1 #Cost of buying 10 ton futures
+
+D2 <- 0.0851 * 5 * 2000 + 65 + 0.0877 * 5 * 2000
+D2 #Cost of buying 5 ton futures and 5 ton at market price
+
+D3 <- 0.0877 * 10 * 2000
+D3 #Cost of buying 10 ton at market price
+
+#For the full and half futures options to be as viable as the full market option, we have to equate their costs. This can only happen if the transaction cost of 10 ton future is 52 and the transaction cost of 5 ton future is 26.
+```
+
+Decision Tree for Sugar High Problem
+```{mermaid}
+graph LR
+
+ A[ ]-->|Decision 1: Futures Contract for all 10 Tons| A1( 1812 )
+ A[ ]-->|Decision 2: Futures Contract for 5 Tons and Market Price for 5 Tons| A2( 1793 )
+ A[ ]-->|Decision 3: Market Price for all 10 Tons| A3( 1754 )
+```
+
+Q3. 
+The US government wants to determine whether immigrants should be tested for a contagious disease and is planning to base this decision on financial considerations. Assume that each immigrant allowed to enter the United States with the disease costs the country 100,000. Also, assume that each immigrant who is allowed to enter the United States and does not have the disease will contribute $10,000 to the national economy. Finally, assume that 5% of all potential immigrants have the disease P(D)=0.05. The US government can choose to admit all immigrants, or admit no immigrants. Consider the problem for one single immigrant in the questions that follow.
+```{r}
+#For Disease Control Problem
+EMV1 <- 0.95*10000 + 0.05*(-100000)
+EMV1 #Expected Monetary Value for letting an immigrant in
+```
+
+Decision Tree for Disease Control Problem
+```{mermaid}
+graph LR
+
+ A[ ]-->|A Admit immigrant| C(( ))
+ A[ ]-->|NA Not admit immigrant| B( 0 )
+ C -->|D Disease p=0.05| D( -100000 )
+ C -->|ND No Disease p=0.95| E( 10000 )
+```
+
+Recall that the P(D)=0.05. Assume now that the government can test immigrants prior to entry into the country and then determine whether they should be admitted. It costs $500 to test a person for the disease; the test result is either positive (+) or negative (-). A person who does not have the disease always tests negative P(-|ND)=1. However, 10% of people with the disease test negative P(-|D)=0.1. The government aims to maximize the expected net financial benefits per potential immigrant. Use the Law of Total Probability to find the P(+) and the P(-). What are these probabilities, respectively? Once again consider the problem for a single immigrant.
+
+P(D)=0.05 (Probability of having the disease)
+
+P(ND)=0.95 (Probability of not having the disease)
+
+P(−∣D)=0.10 (Probability of a negative test if the person has the disease)
+
+P(−∣ND)=1.00 (Probability of a negative test if the person does not have the disease)
+
+P(+∣D)=1−(P(−∣D))=1−0.10=0.90 (Probability of a positive test if the person has the disease)
+
+P(+∣ND)=1−(P(−∣ND))=1−1=0 (Probability of a positive test if the person does not have the disease)
+
+P(+,D) = P(+|D) x P(D) = 0.9 x 0.05 = 0.045
+
+P(+,ND) = P(+|ND) x P(ND) = 0 x 0.95 = 0
+
+P(+) = P(+,D) + P(+,ND) = 0.045
+
+P(-,D) = P(-|D) x P(D) = 0.1 x 0.05 = 0.005
+
+P(-,ND) = P(-|ND) x P(ND) = 1 x 0.95 = 0.95
+
+P(-) = P(-,D) + P(-,ND) = 0.955
+
+Alternatively, P(-) = 1 - P(+) = 1 - 0.045 = 0.955
+
+
+For Bayes Theorem,
+
+P(ND∣+) = (P(+∣ND)xP(ND))/P(+)
+
+P(ND|+) = (0 x 0.95)/0.045 = 0
+
+P(ND|-) = (P(-|ND)xP(ND))/P(-)
+
+P(ND|-) = (1x0.95)/0.955 = 0.995
+
+Decision Tree incorporating the test:
+```{mermaid}
+graph LR
+    A(( )) -->|"Positive p=0.045"| B{ }
+    A -->|"Negative p=0.955"| C{ }
+
+    B -->|"Admit"| D(( ))
+    B -->|"Not Admit"| E("-$500")
+    D -->|"Disease p=1.0"| F("-$100,500")
+    D -->|"No Disease p=0.0"| G("+$9,500")
+
+    C -->|"Admit"| H(( ))
+    C -->|"Not Admit"| I("-$500")
+    H -->|"Disease p=0.005"| J("-$100,500")
+    H -->|"No Disease p=0.995"| K("+$9,500")
+```
+
+For the EMV:
+
+![Working for the last two questions](AsgnmtLast2QsPhoto.png)
+

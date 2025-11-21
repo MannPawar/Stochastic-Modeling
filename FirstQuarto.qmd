@@ -1,0 +1,86 @@
+---
+title: "Untitled"
+author: "Mann Pawar"
+date: "09/23/25"
+format: html
+---
+
+# Intro
+
+## Quarto Intro
+
+you can use *italics*, **Bold**,~~strike~~, `function` new line
+
+<br>
+
+and continue here
+
+-   Hello
+-   World
+
+1)  Hello
+2)  World
+
+# Latex
+
+$$\hat y_{i} = \sum x_{i}^2$$
+
+```{r message=FALSE, warning=FALSE}
+
+library(tidyverse)
+
+x_cubed <- function(x){
+     cubed=x^3
+     return(cubed)
+}
+
+x_cubed(2)
+
+```
+
+this is 4 cubed = `r x_cubed(4)`
+
+# Tables
+
+```{=html}
+<!-- this is a comment
+-->
+```
+
+<!-- comments can be done using ctrl + shift + c -->
+
+| x12213 | y235245 |
+|:------:|:-------:|
+|   45   |   56    |
+
+# Images and Links
+
+![picture](WMbackground.jpg)
+
+website: <https://www.linkedin.com/in/mann-pawar/>
+
+[website](https://www.linkedin.com/in/mann-pawar/)
+
+
+```{python}
+
+x=10
+if x>9:
+  print("hello World")
+  
+```  
+
+# Decision Tree  
+  
+```{mermaid}
+graph LR
+
+ A[ ]-->|Introduce Production Line| C(( ))
+ A[ ]-->|Don't Introduce| B( 0 )
+ C -->|Success p=0.6| D( 5 )
+ C -->|Failure p=0.4| E( -3 )
+```
+
+
+
+
